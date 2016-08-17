@@ -1,0 +1,23 @@
+#!/usr/bin/env node
+
+'use strict';
+
+require('dotenv').config({silent: true});
+
+const legilimens = require('../');
+
+legilimens.authenticate({
+  type: 'oauth',
+  token: process.env.LEGILIMENS_API_TOKEN,
+});
+
+legilimens.report(
+  process.env.LEGILIMENS_OWNER,
+  process.env.LEGILIMENS_REPO,
+  process.env.LEGILIMENS_BASE_BRANCH
+).then((r) => {
+  console.log(r.report);
+  process.exit(0);
+}).catch((e) => {
+  throw e;
+});
